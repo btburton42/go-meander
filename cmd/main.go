@@ -12,9 +12,9 @@ import (
 func main() {
 	runtime.GOMAXPROCS(runtime.NumCPU())
 	meander.APIKey = "AIzaSyBHu12Yl1qDxWuaEIshLNul3rZ4a3FnDoY"
-	http.HandleFunc("/journeys", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/journeys", cors(func(w http.ResponseWriter, r *http.Request) {
 		respond(w, r, meander.Journeys)
-	})
+	}))
 	http.HandleFunc("/recommendations", cors(func(w http.ResponseWriter, r *http.Request) {
 		q := &meander.Query {
 			Journey: strings.Split(r.URL.Query().Get("journey"), "|"),
